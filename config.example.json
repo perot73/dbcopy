@@ -1,0 +1,34 @@
+{
+  "source": {
+    "server": {
+      "driver": "org.postgresql.Driver",
+      "url": "jdbc:postgresql://localhost:5432/db1",
+      "username": "myuser",
+      "password": "mypass"
+    },
+    "before": [],
+    "after": [],
+    "table": "nodes",
+    "columns": [
+      "id",
+      "st_astext(geom) as atext"
+    ]
+  },
+
+  "target": {
+    "server": {
+      "driver": "org.postgresql.Driver",
+      "url": "jdbc:postgresql://localhost:5432/db2",
+      "username": "myuser",
+      "password": "mypass"
+    },
+    "before": [
+      "drop table if exists tmp_test",
+      "create table tmp_test(id serial not null, atext varchar(5) )"
+    ],
+    "after": [
+      "select now()"
+    ],
+    "query": "insert into tmp_test(id, atext) values (?,?)"
+  }
+}
